@@ -15,3 +15,24 @@ class ListingViewSet(viewsets.ModelViewSet):
     update: Update a Listing
     patrial_update: Partially update a Listing(PATCH)
     destroy: Delete a Listing"""
+
+    queryset = Listing.objects.all()
+    serializer_class = ListingSerializer
+    permission_classes =[permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        """Optionally filter listings based on query parameters."""
+        queryset =Listing.objects.all()
+
+        #filter by availability
+        is_available = self.request.query_params.get('is_available', None)
+        if is_available is not None:
+            queryset = queryset.filter(is_available= is_available.lower() == 'true')
+
+        min_price = self.request.query_params.get('min_price', None)
+        if min_price is not None:
+            queryset = queryset.filter(price__gte=min_price)
+
+        max_price = self.request.query_params.get('max_price', None)
+        if max_price is not None:
+            queryset =queryset.filter(price__lte=max_price)    
