@@ -8,3 +8,10 @@ from rest_framework import viewsets, permissions, status
 
 
 # Create your views here.
+class ListingViewSet(viewsets.ModelViewSet):
+    """ViewSet for Listing model providing CRUD operation.
+    list:Get all Listings
+    create: create a new Listing
+    update: Update a Listing
+    patrial_update: Partially update a Listing(PATCH)
+    destroy: Delete a Listing"""
