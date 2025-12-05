@@ -41,4 +41,11 @@ class ListingViewSet(viewsets.ModelViewSet):
         if location is not None:
             queryset =queryset.filter(location__icontains=location)
 
-        return queryset.order_by('-created_at')          
+        return queryset.order_by('-created_at')   
+
+    def perform_create(self, serializer):
+        '''Set the owner to the current user when creating a listing. '''
+        serializer.save(owner=self.request.user)
+
+        
+
