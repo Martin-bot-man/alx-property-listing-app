@@ -74,3 +74,9 @@ class BookingViewSet(viewsets.ModelViewSet):
         '''Optionally filter listings based on query parameters.'''
         queryset = Listing.objects.all()
 
+        #filter by property type
+        property_type = self.request.query_params.get('property_type', None)
+        if property_type is not None:
+            queryset = queryset.filter(property_type=property_type)
+            
+
