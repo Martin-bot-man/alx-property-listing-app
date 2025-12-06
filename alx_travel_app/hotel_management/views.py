@@ -97,4 +97,11 @@ class BookingViewSet(viewsets.ModelViewSet):
 
 
         return queryset.order_by('-id')
+    
+    @action(detail=False, methods=['get'])
+    def property_types(self, request):
+        '''Custom action to get all available property types. 
+        URL: /api/bookings/propety_types/'''
+        types = [{'value':key, 'label':label} for key, label in Listing.PROPERTY_TYPES]
 
+        return Response(types)
